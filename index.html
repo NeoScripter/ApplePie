@@ -12,9 +12,10 @@
             <header
                 class="bg-yellow-primary flex items-center justify-between px-5 py-4 relative"
             >
+                <!-- Burger menu -->
                 <div
                     x-data="{ open: false }"
-                    class="flex items-center justify-center"
+                    class="flex items-center min-w-20"
                 >
                     <button
                         @click="open = !open"
@@ -33,7 +34,55 @@
                             :class="open ? 'top-1/2 -rotate-45' : 'top-[70%]'"
                         ></span>
                     </button>
+
+                    <div
+                        x-show="open"
+                        x-collapse
+                        @click.away="open = false"
+                        class="fixed inset-0 text-slate-primary bottom-auto bg-yellow-primary"
+                    >
+                        <div class="p-5">
+                            <header
+                                class="flex items-center justify-between mb-5"
+                            >
+                                <div
+                                    class="font-bold pl-4 text-slate-primary text-2xl"
+                                >
+                                    Store
+                                </div>
+                                <button
+                                    @click="open = false"
+                                    class="cursor-pointer size-4"
+                                >
+                                    <img
+                                        src="src/assets/svgs/close-btn.svg"
+                                        alt="Закрыть модал"
+                                    />
+                                </button>
+                            </header>
+                            <nav class="flex items-start">
+                                <ul class="space-y-3 pl-4 font-medium">
+                                    <li><a href="">Купить технику</a></li>
+                                    <li><a href="">Купить аксессуары</a></li>
+                                    <li><a href="">Trade-in</a></li>
+                                    <li><a href="">О компании</a></li>
+                                </ul>
+
+                                <ul
+                                    class="space-y-3 pl-4 mt-28 text-sm relative right-5"
+                                >
+                                    <li><a href="">О нас</a></li>
+                                    <li><a href="">Услуги</a></li>
+                                    <li><a href="">Вакансии</a></li>
+                                    <li><a href="">Юр.лицам</a></li>
+                                    <li><a href="">Гарантии и доставка</a></li>
+                                    <li><a href="">Франшиза</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
+                <!-- Social links -->
                 <div class="font-bold text-slate-primary text-2xl">Store</div>
                 <div class="flex items-center gap-3">
                     <a href="" class="block size-5 5">
