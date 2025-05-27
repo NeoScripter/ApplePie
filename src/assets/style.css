@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@import "./fonts/inter.css";
+
+@theme {
+  --font-inter: "Inter", "sans-serif";
+
+  --color-yellow-primary: oklch(0.8612 0.176159 91.903);
+  --color-yellow-hover: oklch(0.9235 0.1339 96.88);
+  --color-slate-primary: oklch(0.252 0 0);
+  
+}

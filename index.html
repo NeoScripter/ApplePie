@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en" class="overflow-x-clip">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Apple Pie</title>
+    </head>
+
+    <body class="font-inter overflow-x-clip bg-black text-white min-h-screen">
+        <div class="max-w-320 mx-auto">
+            <header
+                class="bg-yellow-primary flex items-center justify-between px-5 py-4 relative"
+            >
+                <div
+                    x-data="{ open: false }"
+                    class="flex items-center justify-center"
+                >
+                    <button
+                        @click="open = !open"
+                        class="relative w-8 aspect-square cursor-pointer"
+                    >
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 w-5 h-[2px] bg-slate-primary transition-all duration-300 ease-in-out origin-center"
+                            :class="open ? 'top-1/2 rotate-45' : 'top-[25%]'"
+                        ></span>
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 w-5 h-[2px] bg-slate-primary transition-all duration-300 ease-in-out"
+                            :class="open ? 'opacity-0' : 'top-1/2 -translate-y-1/2'"
+                        ></span>
+                        <span
+                            class="absolute left-1/2 -translate-x-1/2 w-5 h-[2px] bg-slate-primary transition-all duration-300 ease-in-out origin-center"
+                            :class="open ? 'top-1/2 -rotate-45' : 'top-[70%]'"
+                        ></span>
+                    </button>
+                </div>
+                <div class="font-bold text-slate-primary text-2xl">Store</div>
+                <div class="flex items-center gap-3">
+                    <a href="" class="block size-5 5">
+                        <img
+                            src="src/assets/svgs/telegram.svg"
+                            alt="Telegram icon"
+                        />
+                    </a>
+
+                    <a href="" class="block size-5 5">
+                        <img
+                            src="src/assets/svgs/whatsapp.svg"
+                            alt="Telegram icon"
+                        />
+                    </a>
+
+                    <a href="" class="block size-5 5">
+                        <img
+                            src="src/assets/svgs/call.svg"
+                            alt="Telegram icon"
+                        />
+                    </a>
+                </div>
+            </header>
+        </div>
+        <script type="module" src="/src/assets/script.js"></script>
+    </body>
+</html>
