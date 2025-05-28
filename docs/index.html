@@ -763,7 +763,22 @@
                 </div>
 
                 <div
-                    x-data="{ items: [{ title: 'Гарантия на все работы', description: 'Мы настолько уверены в себе, что даем гарантию до 2-х лет на все наши работы!'}, { title: 'Бесплатная диагностика', description: 'Быстрая, качественная и бесплатная диагностика в нашем сервисном центре, даже в случае отказа от ремонта!'}, { title: 'Индивидуальный подход', description: 'Мы всегда ответим на любые Ваши вопросы. Каждый может наблюдать за процессом ремонта своего гаджета в наших офисах!'}]}"
+                    x-data="{
+    items: [
+      {
+        title: 'Гарантия на все работы',
+        description: 'Мы настолько уверены в себе, что даем гарантию до 2-х лет на все наши работы!'
+      },
+      {
+        title: 'Бесплатная диагностика',
+        description: 'Быстрая, качественная и бесплатная диагностика в нашем сервисном центре, даже в случае отказа от ремонта!'
+      },
+      {
+        title: 'Индивидуальный подход',
+        description: 'Мы всегда ответим на любые Ваши вопросы. Каждый может наблюдать за процессом ремонта своего гаджета в наших офисах!'
+      }
+    ]
+  }"
                     class="mt-13"
                 >
                     <h2 class="font-semibold text-2xl mb-4">
@@ -771,7 +786,7 @@
                     </h2>
 
                     <div class="flex flex-col md:flex-row gap-3">
-                        <template x-for="(item, idx) in items">
+                        <template x-for="(item, idx) in items" :key="idx">
                             <div
                                 class="py-6 px-5 md:py-7 md:pb-14 md:px-6 rounded-2xl bg-slate-primary pb-10 relative overflow-clip md:flex-1"
                             >
@@ -790,7 +805,7 @@
                                     :class="idx === 1 ? '-right-5' : '-right-10'"
                                 >
                                     <img
-                                        :src="`src/assets/images/pros-${idx + 1}.webp`"
+                                        :src="`/images/pros-${idx + 1}.webp`"
                                         alt=""
                                         class="w-full h-full"
                                         :class="idx === 1 ? 'rotate-45' : ''"
