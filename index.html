@@ -8,7 +8,7 @@
     </head>
 
     <body class="font-inter overflow-x-clip bg-black text-white min-h-screen">
-        <div class="max-w-320 mx-auto">
+        <div class="max-w-320 mx-auto pb-30">
             <header
                 class="bg-yellow-primary flex items-center justify-between px-5 py-4 md:px-15 relative"
             >
@@ -434,11 +434,329 @@
                     >
                         <p class="mb-3.5 z-10 relative">При покупке телефона</p>
 
-                        <p class="mb-22 z-10 relative">Защитное стекло в подарок</p>
+                        <p class="mb-22 z-10 relative">
+                            Защитное стекло в подарок
+                        </p>
 
                         <div class="absolute z-0 inset-0 left-auto top-5">
-                            <img src="src/assets/images/hero-phone.webp" alt="Hero phone" class="w-full h-full object-contain">
+                            <img
+                                src="src/assets/images/hero-phone.webp"
+                                alt="Hero phone"
+                                class="w-full h-full object-contain"
+                            />
                         </div>
+                    </div>
+                </div>
+
+                <div
+                    x-data="{ items: ['Mac', 'iPhone', 'iPad', 'AppleWatch', 'Android', 'Windows', 'PlayStation'], selected: 0 }"
+                    class="mt-5 bg-slate-primary py-6 px-5 pb-13 rounded-2xl md:px-8 md:pb-10"
+                >
+                    <h2 class="font-semibold mb-5 text-2xl md:text-4xl md:mb-7">
+                        Рассчитайте стоимость ремонта
+                    </h2>
+
+                    <div class="flex flex-wrap gap-3 mb-8">
+                        <template x-for="(item, idx) in items">
+                            <button
+                                @click="selected = idx"
+                                x-text="item"
+                                :class="selected === idx ? 'bg-yellow-primary' : 'bg-white'"
+                                class="px-4 py-2 rounded-xl text-center text-slate-primary text-sm font-medium cursor-pointer transition-colors"
+                            ></button>
+                        </template>
+                    </div>
+
+                    <div
+                        class="flex flex-col text-slate-primary md:flex-row gap-4 items-center"
+                    >
+                        <div
+                            x-data="{
+        options: [
+  { value: 'Mac', label: 'Mac' },
+  { value: 'iPhone', label: 'iPhone' },
+  { value: 'iPad', label: 'iPad' },
+  { value: 'AppleWatch', label: 'AppleWatch' },
+  { value: 'Android', label: 'Android' },
+  { value: 'Windows', label: 'Windows' },
+  { value: 'PlayStation', label: 'PlayStation' }        ],
+        isOpen: false,
+        openedWithKeyboard: false,
+        selectedOption: null,
+        setSelectedOption(option) {
+            this.selectedOption = option
+            this.isOpen = false
+            this.openedWithKeyboard = false
+            this.$refs.hiddenTextField.value = option.value
+        },
+        highlightFirstMatchingOption(pressedKey) {
+            const option = this.options.find((item) =>
+                item.label.toLowerCase().startsWith(pressedKey.toLowerCase()),
+            )
+            if (option) {
+                const index = this.options.indexOf(option)
+                const allOptions = document.querySelectorAll('.combobox-option')
+                if (allOptions[index]) {
+                    allOptions[index].focus()
+                }
+            }
+        },
+        init() {
+      this.selectedOption = this.options[0]
+      this.$refs.hiddenTextField.value = this.selectedOption.value
+    }
+    }"
+                            class="w-full max-w-xs flex flex-col gap-1"
+                            x-on:keydown="highlightFirstMatchingOption($event.key)"
+                            x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
+                        >
+                            <div class="relative">
+                                <!-- trigger button  -->
+                                <button
+                                    type="button"
+                                    role="combobox"
+                                    class="inline-flex w-full items-center justify-between gap-2 whitespace-nowrap border-yellow-primary bg-transparent px-5 py-3 text-sm font-medium capitalize tracking-wide text-yellow-primary transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black rounded-2xl border-2"
+                                    aria-haspopup="listbox"
+                                    aria-controls="industriesList"
+                                    x-on:click="isOpen = ! isOpen"
+                                    x-on:keydown.down.prevent="openedWithKeyboard = true"
+                                    x-on:keydown.enter.prevent="openedWithKeyboard = true"
+                                    x-on:keydown.space.prevent="openedWithKeyboard = true"
+                                    x-bind:aria-label="selectedOption ? selectedOption.value : 'Please Select'"
+                                    x-bind:aria-expanded="isOpen || openedWithKeyboard"
+                                >
+                                    <span
+                                        class="text-sm font-normal"
+                                        x-text="selectedOption ? selectedOption.value : 'Please Select'"
+                                    ></span>
+                                    <!-- Chevron  -->
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        class="size-5"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+
+                                <!-- hidden input to grab the selected value  -->
+                                <input
+                                    id="industry"
+                                    name="industry"
+                                    type="text"
+                                    x-ref="hiddenTextField"
+                                    hidden
+                                />
+                                <ul
+                                    x-cloak
+                                    x-show="isOpen || openedWithKeyboard"
+                                    id="industriesList"
+                                    class="absolute z-10 left-0 top-11 flex max-h-44 w-full flex-col overflow-hidden overflow-y-auto border-neutral-300 bg-neutral-50 py-1.5 dark:border-neutral-700 dark:bg-neutral-900 rounded-md border"
+                                    role="listbox"
+                                    aria-label="industries list"
+                                    x-on:click.outside="isOpen = false, openedWithKeyboard = false"
+                                    x-on:keydown.down.prevent="$focus.wrap().next()"
+                                    x-on:keydown.up.prevent="$focus.wrap().previous()"
+                                    x-transition
+                                    x-trap="openedWithKeyboard"
+                                >
+                                    <template
+                                        x-for="(item, index) in options"
+                                        x-bind:key="item.value"
+                                    >
+                                        <li
+                                            class="combobox-option inline-flex justify-between gap-6 bg-neutral-50 px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-900/5 hover:text-neutral-900 focus-visible:bg-neutral-900/5 focus-visible:text-neutral-900 focus-visible:outline-hidden dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-50/5 dark:hover:text-white dark:focus-visible:bg-neutral-50/10 dark:focus-visible:text-white"
+                                            role="option"
+                                            x-on:click="setSelectedOption(item)"
+                                            x-on:keydown.enter="setSelectedOption(item)"
+                                            x-bind:id="'option-' + index"
+                                            tabindex="0"
+                                        >
+                                            <!-- Label  -->
+                                            <span
+                                                x-bind:class="selectedOption == item ? 'font-bold' : null"
+                                                x-text="item.label"
+                                            ></span>
+                                            <!-- Screen reader 'selected' indicator  -->
+                                            <span
+                                                class="sr-only"
+                                                x-text="selectedOption == item ? 'selected' : null"
+                                            ></span>
+                                            <!-- Checkmark  -->
+                                            <svg
+                                                x-cloak
+                                                x-show="selectedOption == item"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                fill="none"
+                                                stroke-width="2"
+                                                class="size-4"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="m4.5 12.75 6 6 9-13.5"
+                                                />
+                                            </svg>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div
+                            x-data="{
+        options: [
+  { value: 'Mac', label: 'Mac' },
+  { value: 'iPhone', label: 'iPhone' },
+  { value: 'iPad', label: 'iPad' },
+  { value: 'AppleWatch', label: 'AppleWatch' },
+  { value: 'Android', label: 'Android' },
+  { value: 'Windows', label: 'Windows' },
+  { value: 'PlayStation', label: 'PlayStation' }        ],
+        isOpen: false,
+        openedWithKeyboard: false,
+        selectedOption: null,
+        setSelectedOption(option) {
+            this.selectedOption = option
+            this.isOpen = false
+            this.openedWithKeyboard = false
+            this.$refs.hiddenTextField.value = option.value
+        },
+        highlightFirstMatchingOption(pressedKey) {
+            const option = this.options.find((item) =>
+                item.label.toLowerCase().startsWith(pressedKey.toLowerCase()),
+            )
+            if (option) {
+                const index = this.options.indexOf(option)
+                const allOptions = document.querySelectorAll('.combobox-option')
+                if (allOptions[index]) {
+                    allOptions[index].focus()
+                }
+            }
+        },
+        init() {
+      this.selectedOption = this.options[0]
+      this.$refs.hiddenTextField.value = this.selectedOption.value
+    }
+    }"
+                            class="w-full max-w-xs flex flex-col gap-1"
+                            x-on:keydown="highlightFirstMatchingOption($event.key)"
+                            x-on:keydown.esc.window="isOpen = false, openedWithKeyboard = false"
+                        >
+                            <div class="relative">
+                                <!-- trigger button  -->
+                                <button
+                                    type="button"
+                                    role="combobox"
+                                    class="inline-flex w-full items-center justify-between gap-2 whitespace-nowrap border-yellow-primary bg-transparent px-5 py-3 text-sm font-medium capitalize tracking-wide text-yellow-primary transition hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black rounded-2xl border-2"
+                                    aria-haspopup="listbox"
+                                    aria-controls="industriesList"
+                                    x-on:click="isOpen = ! isOpen"
+                                    x-on:keydown.down.prevent="openedWithKeyboard = true"
+                                    x-on:keydown.enter.prevent="openedWithKeyboard = true"
+                                    x-on:keydown.space.prevent="openedWithKeyboard = true"
+                                    x-bind:aria-label="selectedOption ? selectedOption.value : 'Please Select'"
+                                    x-bind:aria-expanded="isOpen || openedWithKeyboard"
+                                >
+                                    <span
+                                        class="text-sm font-normal"
+                                        x-text="selectedOption ? selectedOption.value : 'Please Select'"
+                                    ></span>
+                                    <!-- Chevron  -->
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        class="size-5"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </button>
+
+                                <!-- hidden input to grab the selected value  -->
+                                <input
+                                    id="industry"
+                                    name="industry"
+                                    type="text"
+                                    x-ref="hiddenTextField"
+                                    hidden
+                                />
+                                <ul
+                                    x-cloak
+                                    x-show="isOpen || openedWithKeyboard"
+                                    id="industriesList"
+                                    class="absolute z-10 left-0 top-11 flex max-h-44 w-full flex-col overflow-hidden overflow-y-auto border-neutral-300 bg-neutral-50 py-1.5 dark:border-neutral-700 dark:bg-neutral-900 rounded-md border"
+                                    role="listbox"
+                                    aria-label="industries list"
+                                    x-on:click.outside="isOpen = false, openedWithKeyboard = false"
+                                    x-on:keydown.down.prevent="$focus.wrap().next()"
+                                    x-on:keydown.up.prevent="$focus.wrap().previous()"
+                                    x-transition
+                                    x-trap="openedWithKeyboard"
+                                >
+                                    <template
+                                        x-for="(item, index) in options"
+                                        x-bind:key="item.value"
+                                    >
+                                        <li
+                                            class="combobox-option inline-flex justify-between gap-6 bg-neutral-50 px-4 py-2 text-sm text-neutral-600 hover:bg-neutral-900/5 hover:text-neutral-900 focus-visible:bg-neutral-900/5 focus-visible:text-neutral-900 focus-visible:outline-hidden dark:bg-neutral-900 dark:text-neutral-300 dark:hover:bg-neutral-50/5 dark:hover:text-white dark:focus-visible:bg-neutral-50/10 dark:focus-visible:text-white"
+                                            role="option"
+                                            x-on:click="setSelectedOption(item)"
+                                            x-on:keydown.enter="setSelectedOption(item)"
+                                            x-bind:id="'option-' + index"
+                                            tabindex="0"
+                                        >
+                                            <!-- Label  -->
+                                            <span
+                                                x-bind:class="selectedOption == item ? 'font-bold' : null"
+                                                x-text="item.label"
+                                            ></span>
+                                            <!-- Screen reader 'selected' indicator  -->
+                                            <span
+                                                class="sr-only"
+                                                x-text="selectedOption == item ? 'selected' : null"
+                                            ></span>
+                                            <!-- Checkmark  -->
+                                            <svg
+                                                x-cloak
+                                                x-show="selectedOption == item"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 24 24"
+                                                stroke="currentColor"
+                                                fill="none"
+                                                stroke-width="2"
+                                                class="size-4"
+                                                aria-hidden="true"
+                                            >
+                                                <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="m4.5 12.75 6 6 9-13.5"
+                                                />
+                                            </svg>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <button
+                            class="text-slate-primary bg-yellow-primary rounded-2xl py-2.5 px-8 mt-4 md:mt-0 md:py-3 cursor-pointer font-medium transition-colors duration-150 ease-in hover:bg-yellow-hover hover:text-white"
+                        >
+                            Рассчитать
+                        </button>
                     </div>
                 </div>
             </div>
