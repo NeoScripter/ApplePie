@@ -5,8 +5,8 @@
         <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Apple Pie</title>
-      <script type="module" crossorigin src="./assets/index-CXK_7f3N.js"></script>
-      <link rel="stylesheet" crossorigin href="./assets/index-CiX_y0hH.css">
+      <script type="module" crossorigin src="./assets/index-XFytqdN-.js"></script>
+      <link rel="stylesheet" crossorigin href="./assets/index-Cv9eSl28.css">
     </head>
 
     <body class="font-inter overflow-x-clip bg-black text-white min-h-screen">
@@ -408,7 +408,7 @@
             </div>
 
             <div class="px-5">
-                <div class="flex flex-col gap-5 md:flex-row mt-10">
+                <div class="flex-col gap-5 md:flex-row mt-10 flex">
                     <div
                         class="flex flex-col gap-4 py-10 pr-5 pl-7.5 bg-slate-primary rounded-lg items-start md:flex-1"
                     >
@@ -616,13 +616,13 @@
                         <div
                             x-data="{
         options: [
-  { value: 'Mac', label: 'Mac' },
-  { value: 'iPhone', label: 'iPhone' },
-  { value: 'iPad', label: 'iPad' },
-  { value: 'AppleWatch', label: 'AppleWatch' },
-  { value: 'Android', label: 'Android' },
-  { value: 'Windows', label: 'Windows' },
-  { value: 'PlayStation', label: 'PlayStation' }        ],
+  { value: 'Замена аккумулятора', label: 'Замена аккумулятора' },
+  { value: 'Ремонт камеры', label: 'Ремонт камеры' },
+  { value: 'Чистка динамика', label: 'Чистка динамика' },
+  { value: 'Замена задней крышки', label: 'Замена задней крышки' },
+  { value: 'Ремонт кнопки Home', label: 'Ремонт кнопки Home' },
+  { value: 'Перепайка разъема зарядки', label: 'Перепайка разъема зарядки' },
+  { value: 'Замена микрофона', label: 'Замена микрофона' }],
         isOpen: false,
         openedWithKeyboard: false,
         selectedOption: null,
@@ -759,6 +759,45 @@
                         >
                             Рассчитать
                         </button>
+                    </div>
+                </div>
+
+                <div
+                    x-data="{ items: [{ title: 'Гарантия на все работы', description: 'Мы настолько уверены в себе, что даем гарантию до 2-х лет на все наши работы!'}, { title: 'Бесплатная диагностика', description: 'Быстрая, качественная и бесплатная диагностика в нашем сервисном центре, даже в случае отказа от ремонта!'}, { title: 'Индивидуальный подход', description: 'Мы всегда ответим на любые Ваши вопросы. Каждый может наблюдать за процессом ремонта своего гаджета в наших офисах!'}]}"
+                    class="mt-13"
+                >
+                    <h2 class="font-semibold text-2xl mb-4">
+                        Почему нас выбирают?
+                    </h2>
+
+                    <div class="flex flex-col md:flex-row gap-3">
+                        <template x-for="(item, idx) in items">
+                            <div
+                                class="py-6 px-5 md:py-7 md:pb-14 md:px-6 rounded-2xl bg-slate-primary pb-10 relative overflow-clip md:flex-1"
+                            >
+                                <h3
+                                    class="relative z-10 font-semibold mb-3 text-lg"
+                                    x-text="item.title"
+                                ></h3>
+
+                                <p
+                                    x-text="item.description"
+                                    class="relative z-10 text-sm max-w-80 md:max-w-4/5"
+                                ></p>
+
+                                <div
+                                    class="absolute -bottom-8 size-42"
+                                    :class="idx === 1 ? '-right-5' : '-right-10'"
+                                >
+                                    <img
+                                        :src="`src/assets/images/pros-${idx + 1}.webp`"
+                                        alt=""
+                                        class="w-full h-full"
+                                        :class="idx === 1 ? 'rotate-45' : ''"
+                                    />
+                                </div>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
